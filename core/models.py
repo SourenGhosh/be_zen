@@ -11,4 +11,18 @@ class BeZenBase(models.Model):
     class Meta:
         abstract=True
 
-class MediaConverter()
+
+def video_attachment_file(instance, filename):
+    return f"files/{instance.name}/video/{instance_id}_{filename}"
+
+def subs_attachment_path(instance, filename):
+    return f"files/{instance.name}/subs/{instance_id}_{filename}"
+
+class MediaConverter(BeZenBase):
+    name = models.CharField(max_length=70, default = 'test')
+    attachment = models.FileField(upload_to = video_attachment_file, null=True, blank=True)
+    subtitle = models.FileField(upload_to=subs_attachment_path, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+

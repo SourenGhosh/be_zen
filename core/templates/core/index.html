@@ -7,10 +7,16 @@
   <p>The library has the following record counts:</p>
   <div>
     <form method="POST" enctype="multipart/form-data", action = "/">
+      <!--
       <label for="html">Name</label><br>
       <input type="text" name = "name"><br>
       <label for="html">Video</label><br>
       <input type="file" name="video" id="demos_video"><br>
+      -->
+      {% csrf_token %}
+      {{ form.as_p }}
+    <button type="submit">Upload</button>
+
   <input class="btn btn-primary" type="submit" value="submit">
   </form>
   </div>
