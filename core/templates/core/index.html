@@ -6,7 +6,8 @@
   <h2>Video Uploader</h2>
   <p>The library has the following record counts:</p>
   <div>
-    <form method="POST" enctype="multipart/form-data", action = "/">
+    {% if form %}
+    <form method="POST" enctype="multipart/form-data">
       <!--
       <label for="html">Name</label><br>
       <input type="text" name = "name"><br>
@@ -15,10 +16,17 @@
       -->
       {% csrf_token %}
       {{ form.as_p }}
-    <button type="submit">Upload</button>
 
-  <input class="btn btn-primary" type="submit" value="submit">
+    <input class="btn btn-primary" type="submit" value="submit">
   </form>
+  {% endif %}
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
   </div>
   <ul>
   </ul>

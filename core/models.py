@@ -13,10 +13,10 @@ class BeZenBase(models.Model):
 
 
 def video_attachment_file(instance, filename):
-    return f"files/{instance.name}/video/{instance_id}_{filename}"
+    return f"files/{instance.name}/video/{instance.id}_{filename}"
 
 def subs_attachment_path(instance, filename):
-    return f"files/{instance.name}/subs/{instance_id}_{filename}"
+    return f"files/{instance.name}/subs/{instance.id}_{filename}"
 
 class MediaConverter(BeZenBase):
     name = models.CharField(max_length=70, default = 'test')
