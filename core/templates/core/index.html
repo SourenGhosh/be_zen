@@ -5,7 +5,8 @@
   <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
   <h2>Video Uploader</h2>
   <p>The library has the following record counts:</p>
-  <div>
+  <div class="row">
+  <div class="col">
     {% if form %}
     <form method="POST" enctype="multipart/form-data">
       <!--
@@ -27,7 +28,11 @@
       {% endfor %}
   </ul>
   {% endif %}
-  </div>
   <ul>
   </ul>
+  </div>
+<div class="col">
+  <p>jvhjvj</p>
+</div>
+</div>
 {% endblock %}

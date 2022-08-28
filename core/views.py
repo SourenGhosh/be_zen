@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.views import View
 from django.core.files.storage import FileSystemStorage
-
+from django.urls import reverse
 from core.models import MediaConverter
 from core.forms import MediaConverterForm
+
+
+from core.tasks import make_subtitle_from_videos
 
 class PreviewView(View):
     def get(self, request, *args, **kwargs):
@@ -21,9 +24,10 @@ class PreviewView(View):
         print(video_name)
         form = MediaConverterForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            generated_instance = form.save()
+        make_subtitle_from_videos.delay(generated_instance.attachment.url, generated_instance.id)
+        #make_subtitle_from_videos(generated_instance.attachment.url)
         messages.success(request, 'Form submission successful')
-        return render(
-            request,
-            'core/index.html',
+        return redirect(
+            reverse('home')
         )

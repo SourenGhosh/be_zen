@@ -21,8 +21,15 @@ def subs_attachment_path(instance, filename):
 class MediaConverter(BeZenBase):
     name = models.CharField(max_length=70, default = 'test')
     attachment = models.FileField(upload_to = video_attachment_file, null=True, blank=True)
-    subtitle = models.FileField(upload_to=subs_attachment_path, null=True, blank=True)
+    subtitle = models.TextField(null=True, blank=True)
 
+    @property
+    def subs_attachment_path(self):
+        return f"files/{self.name}/video"
+
+
+        
     def __str__(self):
         return self.name
 
+    
