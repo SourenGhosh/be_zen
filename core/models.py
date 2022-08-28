@@ -13,7 +13,7 @@ class BeZenBase(models.Model):
 
 
 def video_attachment_file(instance, filename):
-    return f"files/{instance.name}/video/{instance.id}_{filename}"
+    return f"files/{instance.name}/video/{instance.id}"
 
 def subs_attachment_path(instance, filename):
     return f"files/{instance.name}/subs/{instance.id}_{filename}"
