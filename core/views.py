@@ -13,10 +13,11 @@ from core.tasks import make_subtitle_from_videos
 class PreviewView(View):
     def get(self, request, *args, **kwargs):
         form = MediaConverterForm()
+        qs  = MediaConverter.objects.all()
         return render(
             request,
             'core/index.html',
-            {'form': form}
+            {'form': form, 'qs': qs}
         )
 
     def post(self, request, *args, **kwargs):

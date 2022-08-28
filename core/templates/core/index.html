@@ -32,7 +32,19 @@
   </ul>
   </div>
 <div class="col">
-  <p>jvhjvj</p>
+  <p>See list of uploaded video</p>
+  <ul>
+    {% for i in qs %}
+    <li>
+      {{i.name}}
+      <ul>
+        <li>uploaded_at: {{i.created_at}}</li>
+        <li>url: {{i.attachment.url}}</li>
+
+      </ul>
+    </li>
+  </ul>
+  {%endfor%}
 </div>
 </div>
 {% endblock %}
