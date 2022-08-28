@@ -32,3 +32,15 @@ class PreviewView(View):
         return redirect(
             reverse('home')
         )
+
+
+
+class SearchView(View):
+    def post(self, request, *args, **kwargs):
+        keyword = request.POST.get('search')
+        print(keyword)
+        return render(
+            request,
+            'core/index.html',
+            {'result': 'qs'}
+        )

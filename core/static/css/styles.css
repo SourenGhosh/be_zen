@@ -9,3 +9,8 @@ ul {
     text-decoration: none;
     font-size:30px;
   }
+
+  .sidebar .gadget {
+    margin: 0;
+    padding: 20px 16px 20px 30px;
+  }

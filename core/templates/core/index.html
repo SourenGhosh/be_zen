@@ -36,11 +36,23 @@
   <ul>
     {% for i in qs %}
     <li>
+      <div>
       {{i.name}}
+      </div>
+      <div class="gadget">
+       
+        <form method="POST" id="search" action={% url 'search' %}>
+           <span>
+            {% csrf_token %}
+              <input type="text" name="search" id="s" />
+              <input class="btn btn-primary" type="submit" value="submit">
+           </span>
+        </form>
+      
+      </div>
       <ul>
-        <li>uploaded_at: {{i.created_at}}</li>
+        <li >uploaded_at: {{i.created_at}}</li>
         <li>url: {{i.attachment.url}}</li>
-
       </ul>
     </li>
   </ul>
