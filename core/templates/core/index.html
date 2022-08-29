@@ -41,7 +41,7 @@
       </div>
       <div class="gadget">
        
-        <form method="POST" id="search" action={% url 'search' %}>
+        <form method="POST" id="search" action={% url 'search' i.id %}>
            <span>
             {% csrf_token %}
               <input type="text" name="search" id="s" />

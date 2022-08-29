@@ -9,7 +9,7 @@ from core.forms import MediaConverterForm
 
 
 from core.tasks import make_subtitle_from_videos
-
+from core.utils import search_subs
 class PreviewView(View):
     def get(self, request, *args, **kwargs):
         form = MediaConverterForm()
@@ -38,9 +38,11 @@ class PreviewView(View):
 class SearchView(View):
     def post(self, request, *args, **kwargs):
         keyword = request.POST.get('search')
-        print(keyword)
+        id = kwargs.get('id')
+        print("................", id)
+        timeframes = search_subs(keyword, id)
         return render(
             request,
-            'core/index.html',
-            {'result': 'qs'}
+            'core/search_result.html',
+            {'results': timeframes}
         )
