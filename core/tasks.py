@@ -15,7 +15,7 @@ from celery import shared_task
 from core.models import MediaConverter
 from configparser import RawConfigParser
 
-
+from be_zen.dynamodb_utils import put_subs
 
 def upload_video(file_dir, saved_path):
     config = RawConfigParser()
@@ -27,16 +27,13 @@ def upload_video(file_dir, saved_path):
         aws_access_key_id=config.get('AWS_CRED', 'access_key_id'),
         aws_secret_access_key=config.get('AWS_CRED', 'secret_access_key'),
     )
-    print("................", file_dir)
     with open(file_dir, 'rb') as f:
         client.upload_fileobj(f, config.get('AWS_CRED', 'bucket_name'), saved_path)
 
-#@shared_task
+@shared_task
 def make_subtitle_from_videos(saved_path, file_id):
-    print("inside celery tasks...........................")
     base_dir = settings.BASE_DIR
     file_dir = Path(f"{base_dir}/{saved_path}")
-    print(file_dir.parent)
     upload_video(file_dir, saved_path)
     command = f'ccextractor {file_dir}'
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
@@ -47,7 +44,7 @@ def make_subtitle_from_videos(saved_path, file_id):
         instance_obj = MediaConverter.objects.get(id=file_id)
         instance_obj.subtitle =subs
         instance_obj.save()
-
+        put_subs(instance_obj.name, instance_obj.subtitle)
     file = file_dir.parent.parent
     shutil.rmtree(str(file))
 
