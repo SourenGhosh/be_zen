@@ -26,8 +26,8 @@ class PreviewView(View):
         form = MediaConverterForm(request.POST, request.FILES)
         if form.is_valid():
             generated_instance = form.save()
-        #make_subtitle_from_videos.delay(generated_instance.attachment.url, generated_instance.id)
-        make_subtitle_from_videos(generated_instance.attachment.url, generated_instance.id)
+        make_subtitle_from_videos.delay(generated_instance.attachment.url, generated_instance.id)
+        #make_subtitle_from_videos(generated_instance.attachment.url, generated_instance.id)
         messages.success(request, 'Form submission successful')
         return redirect(
             reverse('home')
@@ -39,7 +39,6 @@ class SearchView(View):
     def post(self, request, *args, **kwargs):
         keyword = request.POST.get('search')
         id = kwargs.get('id')
-        print("................", id)
         timeframes = search_subs(keyword, id)
         return render(
             request,
