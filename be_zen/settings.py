@@ -11,10 +11,19 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from configparser import RawConfigParser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+config = RawConfigParser()
+
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+config.read(os.path.join(BASE_DIR, f'{os.environ.get("ENV")}.ini'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -37,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'core',
 ]
 
@@ -131,3 +141,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CELERY_BROKER_URL = 'amqp://localhost'
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = config.get('AWS_CRED', 'access_key_id')
+AWS_SECRET_ACCESS_KEY = config.get('AWS_CRED', 'secret_access_key')
+AWS_STORAGE_BUCKET_NAME = config.get('AWS_CRED', 'bucket_name')
+AWS_S3_REGION_NAME = config.get('AWS_CRED', 'region_name')
+AWS_QUERYSTRING_EXPIRE = '315360000'
+AWS_QUERYSTRING_AUTH = False
