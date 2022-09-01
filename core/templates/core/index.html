@@ -35,14 +35,14 @@
     {% for i in qs %}
     <li>
       <div>
-      {{i.name}}
+        Video Name: {{i.name}}
       </div>
       <div class="gadget">
        
         <form method="POST" id="search" action={% url 'search' i.id %}>
            <span>
             {% csrf_token %}
-              <input type="text" name="search" id="s" />
+              <input type="text" name="search" placeholder="Search Subtitles" id="s" />
               <input class="btn btn-primary" type="submit" value="submit">
            </span>
         </form>
@@ -50,7 +50,7 @@
       </div>
       <ul>
         <li >uploaded_at: {{i.created_at}}</li>
-        <li>url: {{i.attachment.url}}</li>
+        <li></li>
       </ul>
     </li>
   </ul>

@@ -17,13 +17,8 @@ from configparser import RawConfigParser
 
 
 
-def upload_video(file_dir, file_id):
-    instance_obj = MediaConverter.objects.get(id=file_id)
-    filename = instance_obj.name
-
+def upload_video(file_dir, saved_path):
     config = RawConfigParser()
-
-
 
     config.read(os.path.join(settings.BASE_DIR, f'{os.environ.get("ENV")}.ini'))
 
@@ -34,7 +29,7 @@ def upload_video(file_dir, file_id):
     )
     print("................", file_dir)
     with open(file_dir, 'rb') as f:
-        client.upload_fileobj(f, config.get('AWS_CRED', 'bucket_name'), filename)
+        client.upload_fileobj(f, config.get('AWS_CRED', 'bucket_name'), saved_path)
 
 #@shared_task
 def make_subtitle_from_videos(saved_path, file_id):
@@ -42,7 +37,7 @@ def make_subtitle_from_videos(saved_path, file_id):
     base_dir = settings.BASE_DIR
     file_dir = Path(f"{base_dir}/{saved_path}")
     print(file_dir.parent)
-    upload_video(file_dir, file_id)
+    upload_video(file_dir, saved_path)
     command = f'ccextractor {file_dir}'
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
