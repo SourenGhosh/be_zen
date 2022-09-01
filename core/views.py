@@ -26,8 +26,8 @@ class PreviewView(View):
         form = MediaConverterForm(request.POST, request.FILES)
         if form.is_valid():
             generated_instance = form.save()
-        make_subtitle_from_videos.delay(generated_instance.attachment.url, generated_instance.id)
-        #make_subtitle_from_videos(generated_instance.attachment.url)
+        #make_subtitle_from_videos.delay(generated_instance.attachment.url, generated_instance.id)
+        make_subtitle_from_videos(generated_instance.attachment.url, generated_instance.id)
         messages.success(request, 'Form submission successful')
         return redirect(
             reverse('home')

@@ -1,12 +1,10 @@
 {% extends "core/base_generic.html" %}
 
 {% block content %}
-  <h1>Bezen Home</h1>
-  <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
-  <h2>Video Uploader</h2>
-  <p>The library has the following record counts:</p>
+  <h1>Bezen Home</h1><br>
+  <h3>Video Uploader</h3><br>
   <div class="row">
-  <div class="col">
+  <div class="col" id="wrapper_1">
     {% if form %}
     <form method="POST" enctype="multipart/form-data">
       <!--
@@ -31,7 +29,7 @@
   <ul>
   </ul>
   </div>
-<div class="col">
+<div class="col" id="wrapper_2">
   <p>See list of uploaded video</p>
   <ul>
     {% for i in qs %}
