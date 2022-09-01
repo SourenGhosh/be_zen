@@ -34,7 +34,7 @@ def upload_video(file_dir, saved_path):
 def make_subtitle_from_videos(saved_path, file_id):
     base_dir = settings.BASE_DIR
     file_dir = Path(f"{base_dir}/{saved_path}")
-    upload_video(file_dir, saved_path)
+    #upload_video(file_dir, saved_path)
     command = f'ccextractor {file_dir}'
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
